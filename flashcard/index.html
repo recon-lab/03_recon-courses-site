@@ -47,14 +47,15 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         cardType: 'vocabulary', frontImage: null, backImage: null, tags: [], deck: '', starred: false
       });
       const [temp, setTemp] = useState({ tagInput: '', newCategory: '', editCat: null, editCatName: '', syncing: false });
+      const [loaded, setLoaded] = useState(false);
 
       useEffect(() => { loadData(); }, []);
       useEffect(() => {
-        if (data.entries.length >= 0) {
+        if (loaded && data.entries.length >= 0) {
           const t = setTimeout(() => saveData(), 1000);
           return () => clearTimeout(t);
         }
-      }, [data]);
+      }, [data, loaded]);
 
  const loadData = async () => {
   try {
@@ -62,8 +63,10 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     if (result?.data) {
       setData({ ...data, ...result.data });
     }
+    setLoaded(true);
   } catch (e) {
     console.error(e);
+    setLoaded(true);
   }
 };
 
