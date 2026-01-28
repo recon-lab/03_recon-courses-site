@@ -38,7 +38,7 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         categories: ['Japanese','French','Spanish','English Vocabulary','General Knowledge','Science','History','Math','Programming','Business','Health','Other'],
         entries: [], difficulty: {}, history: []
       });
-      const [ui, setUi] = useState({
+      const [ui, setUI] = useState({
         view: 'log', editing: null, card: 0, showAnswer: false, shuffle: false, quiz: false, quizAnswer: '',
         filters: { category: 'All', deck: 'All', tag: 'All', starred: false }
       });
@@ -316,7 +316,7 @@ return (
                             </div>
                             <div className="flex gap-2">
                               <button onClick={() => setData({...data,entries:data.entries.map(x => x.id === e.id ? {...x,starred:!x.starred} : x)})} className={e.starred ? 'text-yellow-500' : 'text-gray-400'}>★</button>
-                              <button onClick={() => setUi({...ui,editing:{...e}})} className="text-indigo-600">✎</button>
+                              <button onClick={() => setUI({...ui,editing:{...e}})} className="text-indigo-600">✎</button>
                               <button onClick={() => {if(confirm('Delete?'))setData({...data,entries:data.entries.filter(x => x.id !== e.id)});}} className="text-red-500">🗑</button>
                             </div>
                           </div>
@@ -338,15 +338,15 @@ return (
                   ) : (
                     <div className="space-y-6">
                       <div className="flex gap-3">
-                        <button onClick={() => setUi({...ui,shuffle:!ui.shuffle,card:0})} className={`flex-1 py-2 px-4 rounded-lg ${ui.shuffle ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}>
+                        <button onClick={() => setUI({...ui,shuffle:!ui.shuffle,card:0})} className={`flex-1 py-2 px-4 rounded-lg ${ui.shuffle ? 'bg-purple-600 text-white' : 'bg-gray-200'}`}>
                           {ui.shuffle ? 'Shuffled' : 'Shuffle'}
                         </button>
-                        <button onClick={() => setUi({...ui,quiz:!ui.quiz,showAnswer:false})} className={`flex-1 py-2 px-4 rounded-lg ${ui.quiz ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+                        <button onClick={() => setUI({...ui,quiz:!ui.quiz,showAnswer:false})} className={`flex-1 py-2 px-4 rounded-lg ${ui.quiz ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
                           {ui.quiz ? 'Quiz' : 'Study'}
                         </button>
                       </div>
                       <div className="text-center text-sm">Card {ui.card + 1} of {cards.length}</div>
-                      <div onClick={() => !ui.quiz && setUi({...ui,showAnswer:!ui.showAnswer})} className={`bg-gradient-to-br ${ui.quiz ? 'from-green-500 to-emerald-600' : 'from-indigo-500 to-purple-600'} rounded-2xl p-8 min-h-80 flex items-center justify-center ${!ui.quiz ? 'cursor-pointer' : ''}`}>
+                      <div onClick={() => !ui.quiz && setUI({...ui,showAnswer:!ui.showAnswer})} className={`bg-gradient-to-br ${ui.quiz ? 'from-green-500 to-emerald-600' : 'from-indigo-500 to-purple-600'} rounded-2xl p-8 min-h-80 flex items-center justify-center ${!ui.quiz ? 'cursor-pointer' : ''}`}>
                         <div className="text-center">
                           <span className="px-4 py-2 bg-white/20 text-white text-sm rounded-full mb-4 inline-block">{cards[ui.card].category}</span>
                           <p className="text-white text-2xl font-semibold mb-4">{ui.showAnswer ? 'Answer' : 'Question'}</p>
@@ -364,7 +364,7 @@ return (
                       )}
                       <div className="flex gap-3 justify-center">
                         <button onClick={prevCard} className="px-6 py-3 bg-gray-200 rounded-lg">Previous</button>
-                        {!ui.quiz && <button onClick={() => setUi({...ui,showAnswer:!ui.showAnswer})} className="px-6 py-3 bg-indigo-600 text-white rounded-lg">Flip</button>}
+                        {!ui.quiz && <button onClick={() => setUI({...ui,showAnswer:!ui.showAnswer})} className="px-6 py-3 bg-indigo-600 text-white rounded-lg">Flip</button>}
                         <button onClick={nextCard} className="px-6 py-3 bg-gray-200 rounded-lg">Next</button>
                       </div>
                     </div>
